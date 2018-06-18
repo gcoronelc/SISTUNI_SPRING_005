@@ -40,8 +40,10 @@
 			var data = $("#form1").serialize();
 			$("#tablaDatos").empty();
 			
-			$.get("traerMovimientos", data, function(arreglo){
-							
+			$.get("traerMovimientos", data, function(response){
+				
+				var arreglo = $.parseJSON(response);				
+				
 				if( arreglo.length == 0 ){
 					return false;
 				}

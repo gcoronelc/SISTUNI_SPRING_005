@@ -91,10 +91,10 @@ public class HomeController {
 
 	}
 	
+	
 	// =======================================
 	// CONSULTAR MOVIMIENTOS
 	// =======================================
-
 	@RequestMapping(value = "/getMovimientos", method = RequestMethod.GET)
 	public String getMovimientos() {
 
@@ -135,6 +135,31 @@ public class HomeController {
 			model.addAttribute("error", e.getMessage());
 		}
 		return "procDeposito";
+	}
+	
+	// =======================================
+	// PROCESAR RETIRO
+	// =======================================
+
+	@RequestMapping(value = "/procRetiro", method = RequestMethod.GET)
+	public String procRetiro() {
+		return "procRetiro";
+	}
+
+	@RequestMapping(value = "/procRetiro", method = RequestMethod.POST)
+	public String procRetiro(
+			@RequestParam("cuenta") String cuenta, 
+			@RequestParam("importe") double importe,
+			@RequestParam("clave") String clave,
+			Model model) {
+		try {
+			String codEmp = "0003";
+			eurekaService.procRetiro(cuenta, importe, codEmp, clave);
+			model.addAttribute("mensaje", "Proceso ejecutado correctamente.");
+		} catch (Exception e) {
+			model.addAttribute("error", e.getMessage());
+		}
+		return "procRetiro";
 	}
 
 }
